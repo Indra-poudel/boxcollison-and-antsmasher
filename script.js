@@ -38,7 +38,13 @@
  
     };
     this.setspeed = function(x) {
-      this.speed = x;
+     if(x%2==0)
+     {
+      this.speed = this.speed;
+     }
+     else{
+      this.speed = -this.speed
+     }
     };
 
     this.setSize = function(x) {
@@ -57,15 +63,23 @@
       this.element.style.height = this.height + "px";
     };
 
-    this.move = function() {
+    this.move = function(i) {
       if (this.y + this.speed < 0 || this.y + this.speed > 500 - this.height)
-        this.speed = -this.speed;
+      { this.speed = -this.speed;
+        
+      
+      }
       this.y += this.speed;
       if (this.x + this.speed < 0 || this.x + this.speed > 500 - this.width)
-        this.speed = -this.speed;
+       { this.speed = -this.speed;
+      
+      }
+    
       this.x += this.speed;
-      this.y += this.speed;
+      this.y -= this.speed;
       this.draw();
+      
+      
     };
 
     this.checkCollision = function(boxes) {
@@ -76,7 +90,7 @@
 
         var dis = Math.sqrt(a * a + b * b);
 
-        if (dis < (this.width + boxes[i].width) / 2 && dis > this.width / 2) {
+        if (dis < (this.width + boxes[i].width)/2 && dis > this.width / 2) {
           // console.log("inside" + dis);
           this.speed = -this.speed;
         }
@@ -93,18 +107,26 @@
     var MAX_WIDTH = 500;
     var MAX_HEIGHT = 500 ;
     this.parentElement = parentElement;
-    this.boxCount = boxCount || 15;
+    this.boxCount = boxCount || 20;
 
     this.startGame = function() {
       for (var i = 0; i < this.boxCount; i++) {
         var box = new Box(parentElement).init();
         boxes.push(box);
+        box.setSize(
+          getRandomArbitrary(10,30),
+          getRandomArbitrary(10,30)
+          
+        );
 
         box.setPostion(
           getRandomArbitrary(0, (MAX_WIDTH-box.width)),
           getRandomArbitrary(0, (MAX_HEIGHT-box.height)),
           boxes
         );
+        box.setspeed(i);
+      
+        
         box.draw();
       }
 
