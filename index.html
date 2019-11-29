@@ -8,9 +8,10 @@
      
 
     .app {
+      float: left;
       height: 500px;
       width: 500px;
-      background: #dfdfdf;
+      background: white;
       position: relative;
       border:2px black solid;
       margin-top: 20px;
@@ -20,10 +21,11 @@
     .box {
       /* background-image: url("./a.png");
       background-size: cover; */
-      background-color: red;
+     /* background-color: red;*/
       position: absolute;
       margin: 0;
       border-radius: 50%;
+      transition: transform  1s;
 
       
     
@@ -36,6 +38,7 @@
 </head>
 <body>
   <div class="app" id="app"></div>
+  <div class="app" id="app1"></div>
   <script src="script.js"></script>
 </body>
 </html>
