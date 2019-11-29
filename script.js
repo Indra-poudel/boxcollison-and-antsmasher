@@ -36,7 +36,7 @@
         return this;
       } else {
         var box = document.createElement("div");
-        box.style.backgroundImage = "url('a.gif')";
+        box.style.backgroundImage = "url('a.png')";
         box.style.backgroundSize = "cover";
         box.style.height = this.height   + "px";
         box.style.width = this.width + "px";
