@@ -2,9 +2,10 @@
   function Box(parentElement) {
     this.x = 10;
     this.y = 10;
-    this.speed = 1;
     this.width = 20;
     this.height = 20;
+    this.dx = 1;
+    this.dy = -1;
     this.element = null;
     this.parentElement = parentElement;
     var that = this;
@@ -33,8 +34,11 @@
 
     this.setPostion = function(x, y, boxes) {
 
+     
         this.x = x;
         this.y = y;
+      
+     
  
     };
     this.setspeed = function(x) {
@@ -53,7 +57,7 @@
     };
 
     this.boxClicked = function() {
-      console.log("boxClicked", this.width);
+      this.element.style.display="none";
     };
 
     this.draw = function() {
@@ -64,26 +68,21 @@
     };
 
     this.move = function(i) {
-      if (this.y + this.speed < 0 || this.y + this.speed > 500 - this.height)
-      { this.speed = -this.speed;
-        
-      
-      }
-      this.y += this.speed;
-      if (this.x + this.speed < 0 || this.x + this.speed > 500 - this.width)
-       { this.speed = -this.speed;
-      
-      }
+    if(this.x + this.dx > 500-this.width || this.x + this.dx < 0) {
+        this.dx = -this.dx;
+    }
+    if(this.y + this.dy > 500-this.width || this.y + this.dy < 0) {
+        this.dy = -this.dy;
+    }
     
-      this.x += this.speed;
-      this.y -= this.speed;
-      this.draw();
+    this.x += this.dx;
+    this.y += this.dy;
+    this.draw();
       
       
     };
 
     this.checkCollision = function(boxes) {
-      // console.log("boxes", boxes.length);
       for (var i = 0; i <= boxes.length - 1; i++) {
         var a = this.x - boxes[i].x;
         var b = this.y - boxes[i].y;
@@ -91,8 +90,9 @@
         var dis = Math.sqrt(a * a + b * b);
 
         if (dis < (this.width + boxes[i].width)/2 && dis > this.width / 2) {
-          // console.log("inside" + dis);
-          this.speed = -this.speed;
+          this.dx = -this.dx;
+          this.dy = -this.dy;
+          
         }
       }
     };
@@ -113,12 +113,6 @@
       for (var i = 0; i < this.boxCount; i++) {
         var box = new Box(parentElement).init();
         boxes.push(box);
-        box.setSize(
-          getRandomArbitrary(10,30),
-          getRandomArbitrary(10,30)
-          
-        );
-
         box.setPostion(
           getRandomArbitrary(0, (MAX_WIDTH-box.width)),
           getRandomArbitrary(0, (MAX_HEIGHT-box.height)),
@@ -130,7 +124,7 @@
         box.draw();
       }
 
-      setInterval(this.moveBoxes.bind(this), 15);
+      setInterval(this.moveBoxes.bind(this), 10);
     };
 
     this.moveBoxes = function() {
